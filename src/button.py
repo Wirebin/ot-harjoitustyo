@@ -15,7 +15,6 @@ class Button(Component):
         self.on_click = on_click
 
     def update(self, mouse_pos):
-
         # If left-clicked on top of button
         if self.button_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed(num_buttons=3)[0]:
             self.on_click()
