@@ -4,6 +4,7 @@ from button import Button
 
 class TestButton(unittest.TestCase):
     def setUp(self):
+        pygame.init()
         self.button = Button((100,100), (100, 50), (255,255,255), (0,0,0), "Test")
 
     def test_correct_location(self):
