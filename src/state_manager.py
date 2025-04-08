@@ -5,7 +5,6 @@ class State_Manager:
         self.current_state = Game_States.MENU
         self.state_amount = len(Game_States)
 
-
     def next_state(self):
         # If state value is over the limit, go back to the first one.
         if self.current_state.value >= self.state_amount:
