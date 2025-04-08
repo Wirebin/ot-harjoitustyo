@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class Component(ABC):
     @abstractmethod
     def update():
-        # Handle process of component
+        # Handle updating of component
         pass
 
     @abstractmethod
