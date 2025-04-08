@@ -8,12 +8,12 @@ class Button(Component):
         self.color_normal = color_normal
         self.color_hover = color_hover
         
-        self.button_surface = pygame.Surface((self.size[0], self.size[1]))
         self.button_rect = pygame.Rect(self.location[0], self.location[1], self.size[0], self.size[1])
         
+        self.button_text = button_text
         self.font = pygame.font.Font(None, self.button_rect.height - 10)
-        self.button_text = self.font.render(button_text, True, (0,0,0))
-        self.button_text_rect = self.button_text.get_rect(center=self.button_rect.center)
+        self.button_text_render = self.font.render(button_text, True, (0,0,0))
+        self.button_text_rect = self.button_text_render.get_rect(center=self.button_rect.center)
 
         self.on_click = on_click
 
@@ -31,4 +31,4 @@ class Button(Component):
             pygame.draw.rect(screen, self.color_normal, self.button_rect)
 
         # Draw text
-        screen.blit(self.button_text, self.button_text_rect)
+        screen.blit(self.button_text_render, self.button_text_rect)
