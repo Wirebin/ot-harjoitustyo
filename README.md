@@ -17,7 +17,7 @@ git clone https://github.com/Wirebin/ot-harjoitustyo.git
 
 2. Asenna projektin riippuvuudet päähakemiston sisällä:
 ```bash
-poetry install
+poetry install --no-root
 ```
 
 3. Käynnistä sovellus komennolla:
