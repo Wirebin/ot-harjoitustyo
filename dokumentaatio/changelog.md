@@ -12,3 +12,9 @@
 - Lisätty mahdollisuus näyttää tekstiä 'Button'-luokkaan.
 - Lisätty 'States' ja 'State_Manager'-luokat, jotka vastaavat pelin eri tilojen hallinnasta.
 - Testattu 'State_Manager'-luokan toimivuus.
+
+## Viikko 5
+- Koodin refaktorointi
+- Lisätty 'Shapes'-tiedosto, jossa kaksi funktiota kuvioiden tekemiseen.
+- Lisätty mahdollisuus asettaa omalla vuorolla pelinappula ruudukkoon.
+- Lisätty testejä 'Main_board', 'Sub_board' ja 'Tile'-luokille
