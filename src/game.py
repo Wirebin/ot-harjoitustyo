@@ -11,10 +11,9 @@ FPS_CLOCK = pygame.time.Clock()
 
 WIDTH = 600
 HEIGHT = 400
+TILE_SIZE = 30
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 state_manager = StateManager()
-
-TILE_SIZE = 30
 
 start_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
                        (100, 50),
@@ -42,7 +41,7 @@ while True:
         board.draw(screen)
 
     elif state_manager.current_state == GameStates.RESULT:
-        pass
+        print("WINNER")
 
     pygame.display.flip()
     FPS_CLOCK.tick()

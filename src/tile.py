@@ -1,26 +1,36 @@
-from component import Component
 import pygame
+import shapes
+from component import Component
 
 class Tile(Component):
     def __init__(self, location: tuple, size: int):
         self.size = size
         self.location = location
-        self.status = None
+        self.flagged = False
+        self.tile_owner = 0     # 0 = None, 1 = X, 2 = O
 
         self.button_rect = pygame.Rect(self.location[0], self.location[1], self.size, self.size)
+        self.mouse_pos = None
 
-    def update(self, mouse_pos):
-        # If left-clicked on top of tile
-        if self.button_rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed(num_buttons=3)[0]:
-            self.status = 1
 
-    def draw(self, screen, mouse_pos):
-        # If not hovering
-        if self.button_rect.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, (200,200,200), self.button_rect)
+    def draw(self, screen):
+        # If tile has not been clicked
+        if not self.flagged:
+            # If not hovering
+            if self.button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen, (200,200,200), self.button_rect)
 
-        # If hovering over button
+            # If hovering over button
+            else:
+                pygame.draw.rect(screen, (150,150,150), self.button_rect)
+
         else:
-            pygame.draw.rect(screen, (150,150,150), self.button_rect)
+            # Draw a cross
+            if self.tile_owner == 1:
+                shapes.cross(screen, pygame.color.Color(200, 0, 0), self.location, self.size)
+
+            # Draw a circle
+            elif self.flagged and self.tile_owner == 2:
+                shapes.circle(screen, pygame.color.Color(0, 0, 200), self.location, self.size)
 
         pygame.draw.rect(screen, (0,0,0), self.button_rect, 1)
