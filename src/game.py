@@ -1,21 +1,28 @@
-from state_manager import State_Manager
-from main_board import Main_Board
-from states import Game_States
-from button import Button
-import pygame
 import sys
+import pygame
+from button import Button
+from states import GameStates
+from main_board import MainBoard
+from state_manager import StateManager
 
 pygame.init()
-fps = 30
-fps_clock = pygame.time.Clock()
+FPS = 30
+FPS_CLOCK = pygame.time.Clock()
 
-width = 600
-height = 400
-screen = pygame.display.set_mode((width, height))
-state_manager = State_Manager()
+WIDTH = 600
+HEIGHT = 400
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+state_manager = StateManager()
 
-start_button = Button(((width/2)-(100/2), (height/2)-(70/2)), (100, 50), (200, 200, 200), (150,150,150), "Start", state_manager.next_state)
-board = Main_Board(((width/2)-(220/2), (height/2)-(220/2)), 25)
+TILE_SIZE = 30
+
+start_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
+                       (100, 50),
+                       "Start",
+                       state_manager.next_state)
+
+# Place board on the center of the screen
+board = MainBoard(((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
 
 while True:
     screen.fill((100,100,100))
@@ -26,21 +33,16 @@ while True:
             pygame.quit()
             sys.exit()
 
-    print(state_manager.current_state)
-    if state_manager.current_state == Game_States.MENU:
-        start_button.update(mouse_pos)
-        start_button.draw(screen, mouse_pos)
+    if state_manager.current_state == GameStates.MENU:
+        start_button.update()
+        start_button.draw(screen)
 
-    elif state_manager.current_state == Game_States.GAME:
-        board.update(mouse_pos)
-        board.draw(screen, mouse_pos)
+    elif state_manager.current_state == GameStates.GAME:
+        board.update()
+        board.draw(screen)
 
-    elif state_manager.current_state == Game_States.RESULT:
+    elif state_manager.current_state == GameStates.RESULT:
         pass
 
-    else:
-        raise state_manager(IndexError, "Invalid index for a game state.")
-
     pygame.display.flip()
-    fps_clock.tick()
-
+    FPS_CLOCK.tick()

@@ -1,22 +1,15 @@
-from states import Game_States
+from states import GameStates
 
-class State_Manager:
+class StateManager:
     def __init__(self):
-        self.current_state = Game_States.MENU
-        self.state_amount = len(Game_States)
+        self.current_state = GameStates.MENU
+        self.state_amount = len(GameStates)
 
     def next_state(self):
         # If state value is over the limit, go back to the first one.
         if self.current_state.value >= self.state_amount:
-            self.current_state = Game_States.MENU
+            self.current_state = GameStates.MENU
 
         # Otherwise increase state by one / move to the next state.
         else:
-            self.current_state = Game_States(self.current_state.value + 1)
-
-
-    # def go_to_state(self, state: Game_States):
-    #     # If specified state exists, set it as current.
-    #     if state in Game_States:
-    #         self.current_state = state
-
+            self.current_state = GameStates(self.current_state.value + 1)
