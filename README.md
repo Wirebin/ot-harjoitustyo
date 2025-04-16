@@ -7,6 +7,7 @@ Peli on toiminnaltaan samankaltainen kuin tavallinen ristinolla, mutta normaalis
 [- Laskarit](laskarit/)\
 [- Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)\
 [- Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)\
+[- Arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)\
 [- Changelog](dokumentaatio/changelog.md)
 
 ## Asennus
