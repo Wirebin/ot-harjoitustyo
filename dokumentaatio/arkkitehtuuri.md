@@ -1,2 +1,1 @@
-![Class Diagram](/dokumentaatio/assets/ClassDiagram.png)
-
+![luokkadiagrammi](../dokumentaatio/assets/ClassDiagram.png)
