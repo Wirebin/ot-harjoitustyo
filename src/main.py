@@ -26,7 +26,6 @@ board = MainBoard(((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_
 def run():
     while True:
         screen.fill((100,100,100))
-        mouse_pos = pygame.mouse.get_pos()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
