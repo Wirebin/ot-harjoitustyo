@@ -4,9 +4,8 @@ Sovelluksena toimii peli nimeltä "Ultimate ristinolla".
 Peli on toiminnaltaan samankaltainen kuin tavallinen ristinolla, mutta normaalista poiketen siinä pelataan yhdeksää eri ristinollapeliä joiden lopputulos muodostaa yhden ison pelin. Peli on tällä hetkellä suunniteltu pelattavaksi kahden ihmisen kesken.
 
 ## Dokumentaatio
-[- Laskarit](laskarit/)\
-[- Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)\
 [- Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)\
+[- Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)\
 [- Arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)\
 [- Changelog](dokumentaatio/changelog.md)
 
