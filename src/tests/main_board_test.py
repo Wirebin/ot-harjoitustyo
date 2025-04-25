@@ -17,3 +17,7 @@ class TestMainBoard(unittest.TestCase):
 
     def test_winning_combination_amount(self):
         self.assertEqual(len(self.board.winning_combos), 8)
+
+    def test_return_false_for_no_winning_combo(self):
+        
+        self.assertEqual()

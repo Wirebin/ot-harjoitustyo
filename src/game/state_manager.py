@@ -1,4 +1,4 @@
-from states import GameStates
+from game.states import GameStates
 
 class StateManager:
     def __init__(self):

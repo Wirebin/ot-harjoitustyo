@@ -1,6 +1,6 @@
 import unittest
 import pygame
-from button import Button
+from ui.button import Button
 
 class TestButton(unittest.TestCase):
     def setUp(self):
