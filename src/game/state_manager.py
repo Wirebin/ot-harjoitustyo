@@ -13,3 +13,11 @@ class StateManager:
         # Otherwise increase state by one / move to the next state.
         else:
             self.current_state = GameStates(self.current_state.value + 1)
+
+
+    def go_to_state(self, state: GameStates):
+        if state in GameStates:
+            # If 
+            if self.current_state == state:
+                return
+            self.current_state = state
