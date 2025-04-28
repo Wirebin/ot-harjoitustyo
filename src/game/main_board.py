@@ -1,10 +1,11 @@
 from math import ceil
 import pygame
 from game.sub_board import SubBoard
-
+from game.states import GameStates
 
 class MainBoard():
-    def __init__(self, location: tuple, tile_size: int):
+    def __init__(self, state_manager, location: tuple, tile_size: int):
+        self.state_manager = state_manager
         self.location = location
         self.border_size = ceil(tile_size / 10)
         self.border_rect = pygame.rect.Rect(
@@ -22,7 +23,7 @@ class MainBoard():
             [0, 1, 0, 0, 1, 0, 0, 1, 0],
             [0, 0, 1, 0, 0, 1, 0, 0, 1],
             [1, 0, 0, 0, 1, 0, 0, 0, 1],
-            [0, 0, 1, 0, 1, 0, 1, 0, 0],
+            [0, 0, 1, 0, 1, 0, 1, 0, 0]
         )
 
         self.sub_boards = []
@@ -34,12 +35,16 @@ class MainBoard():
                      tile_size))
 
 
-    def check_win_conditions(self, board, player):
-        replaced_board = [1 if tile.tile_owner == player else 0 for tile in board.tiles]
+    def check_win_main(self, player):
+        # Create main game from the sub_board results
+        main_board = [board.tile_owner for board in self.sub_boards]
+        # Replace only the current player numbers with 1 and the rest with 0
+        replaced_board = [1 if tile == player else 0 for tile in main_board]
 
+        # Compare the created main board with the winning combinations and check for win
         for combination in self.winning_combos:
-            if all(replaced_board[i] == combination[i] for i, 
-                   value in enumerate(combination) if value == 1):
+            if all(replaced_board[i] == value for i, value in
+                   enumerate(combination) if value == 1):
                 return True
         return False
 
@@ -47,7 +52,15 @@ class MainBoard():
     def update(self):
         # Main Board Logic
         for sub_board in self.sub_boards:
+            # Board game has already finished, skipping.
+            if sub_board.tile_owner:
+                continue
+
+            # Update a board
             sub_board.update()
+
+            if self.check_win_main(1) or self.check_win_main(2):
+                self.state_manager.go_to_state(GameStates.RESULT)
 
 
     def draw(self, screen):
