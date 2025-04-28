@@ -1,10 +1,10 @@
 import unittest
-from sub_board import SubBoard
+from game.sub_board import SubBoard
 from pygame import Rect
 
 class TestSubBoard(unittest.TestCase):
     def setUp(self):
-        self.board = SubBoard((200, 100), 50)
+        self.board = SubBoard(None, (200, 100), 50)
 
     def test_correct_location(self):
         self.assertEqual(self.board.location, (200, 100))

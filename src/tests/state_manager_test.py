@@ -1,6 +1,6 @@
 import unittest
-from state_manager import StateManager
-from states import GameStates
+from game.state_manager import StateManager
+from game.states import GameStates
 
 class TestStateManager(unittest.TestCase):
     def setUp(self):
