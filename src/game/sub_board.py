@@ -4,7 +4,8 @@ import ui.shapes as shapes
 from game.tile import Tile
 
 class SubBoard():
-    def __init__(self, location: tuple, tile_size: int):
+    def __init__(self, main_board, location: tuple, tile_size: int):
+        self.main_board = main_board
         self.location = location
         self.result = 0
 
@@ -26,7 +27,26 @@ class SubBoard():
 
 
     def update(self):
-        pass
+        mouse_pos = pygame.mouse.get_pos()
+
+        for tile in self.tiles:
+            # Board game has already finished, skipping.
+            if self.result:
+                continue
+
+            # If left-clicked on top of tile.
+            if tile.button_rect.collidepoint(mouse_pos) and \
+                pygame.mouse.get_pressed(num_buttons=3)[0] and not tile.flagged:
+                tile.flagged = True
+
+                if self.main_board.player_turn == 1:
+                    tile.tile_owner = 1
+                elif self.main_board.player_turn == 2:
+                    tile.tile_owner = 2
+
+                if self.main_board.check_win_conditions(self, self.main_board.player_turn):
+                    self.result = self.main_board.player_turn
+                self.main_board.player_turn = 1 if self.main_board.player_turn == 2 else 2
 
 
     def draw(self, screen):

@@ -28,7 +28,7 @@ class MainBoard():
         self.sub_boards = []
         for i in range(3):
             for j in range(3):
-                self.sub_boards.append(SubBoard(
+                self.sub_boards.append(SubBoard(self,
                     (self.location[0] + i * (tile_size * 3 + self.border_size),
                      self.location[1] + j * (tile_size * 3 + self.border_size)),
                      tile_size))
@@ -45,29 +45,7 @@ class MainBoard():
 
 
     def update(self):
-        mouse_pos = pygame.mouse.get_pos()
-
         # Main Board Logic
-        for board in self.sub_boards:
-            for tile in board.tiles:
-                # Board game has already finished, skipping.
-                if board.result:
-                    continue
-
-                # If left-clicked on top of tile.
-                if tile.button_rect.collidepoint(mouse_pos) and \
-                    pygame.mouse.get_pressed(num_buttons=3)[0] and not tile.flagged:
-                    tile.flagged = True
-
-                    if self.player_turn == 1:
-                        tile.tile_owner = 1
-                    elif self.player_turn == 2:
-                        tile.tile_owner = 2
-
-                    if self.check_win_conditions(board, self.player_turn):
-                        board.result = self.player_turn
-                    self.player_turn = 1 if self.player_turn == 2 else 2
-
         for sub_board in self.sub_boards:
             sub_board.update()
 
