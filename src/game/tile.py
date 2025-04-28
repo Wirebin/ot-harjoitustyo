@@ -1,5 +1,5 @@
 import pygame
-import ui.shapes as shapes
+from ui import shapes
 
 class Tile():
     def __init__(self, location: tuple, size: int):
