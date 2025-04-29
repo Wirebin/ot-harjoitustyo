@@ -22,7 +22,7 @@ start_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
                       (100, 50),
                       "Start",
                       state_manager.next_state)
-restart_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
+restart_button = Button(((WIDTH/2)-(100/2), (HEIGHT)-(80)),
                         (120, 50),
                         "Restart",
                         None)
