@@ -14,7 +14,13 @@
 - Testattu 'State_Manager'-luokan toimivuus.
 
 ## Viikko 5
-- Koodin refaktorointi
+- Koodin refaktorointi.
 - Lisätty 'Shapes'-tiedosto, jossa kaksi funktiota kuvioiden tekemiseen.
 - Lisätty mahdollisuus asettaa omalla vuorolla pelinappula ruudukkoon.
 - Lisätty testejä 'Main_board', 'Sub_board' ja 'Tile'-luokille
+
+## Viikko 6
+- Koodin refaktorointi ja tiedostojen tarkempi jako kansioihin.
+- Lisätty 'OnePressInput'-luokka, joka hoitaa pelin käyttämät hiiren syötöt.
+- Lisätty mahdollisuus voittaa peli.
+- Lisätty pelin lopetusruutu, jossa näkyy pelin voittaja ja mahdollisuus pelata uudestaan.
