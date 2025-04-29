@@ -1,12 +1,13 @@
 import pygame
+from input.one_press_input import OnePressInput
 
 class Button():
     def __init__(self,
+                 
                  location: tuple,
                  size: tuple,
                  button_text: str,
                  on_click=None):
-
         self.location = location
         self.size = size
 
@@ -23,9 +24,9 @@ class Button():
         self.on_click = on_click
 
     def update(self):
-        # If left-clicked on top of button
+        # If left mouse button lifted on top of button
         if self.button_rect.collidepoint(pygame.mouse.get_pos()) and \
-            pygame.mouse.get_pressed(num_buttons=3)[0]:
+            OnePressInput.is_mouse_clicked(0):
             self.on_click()
 
     def draw(self, screen):
