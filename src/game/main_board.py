@@ -4,7 +4,20 @@ from game.sub_board import SubBoard
 from game.states import GameStates
 
 class MainBoard():
+    """Class that handles the MainBoard.
+    """
     def __init__(self, state_manager, location: tuple, tile_size: int):
+        """The constructor for the MainBoard class. Creates a MainBoard
+        instance at the specified location. 
+
+        Args:
+            state_manager (StateManager):
+                A state manager instance used to switch game states.
+            location (tuple):
+                The location of the MainBoard instance.
+            tile_size (int):
+                The size of a singular tile used for the SubBoard games.
+        """
         self.state_manager = state_manager
         self.location = location
         self.border_size = ceil(tile_size / 10)
@@ -36,12 +49,23 @@ class MainBoard():
 
 
     def check_win_main(self, player):
-        # Create main game from the sub_board results
+        """Checks the winning conditions for the MainBoard.
+
+        Compares the winning combinations with the results from the SubBoard
+        games to determine whether a player has won the main game.
+
+        Args:
+            player (int):
+                The player which the winning conditions will be checked for.
+
+        Returns:
+            bool:
+                Returns True, if the player has won the SubBoard game.
+                Otherwise returns False.
+        """
         main_board = [board.result for board in self.sub_boards]
-        # Replace only the current player numbers with 1 and the rest with 0
         replaced_board = [1 if tile == player else 0 for tile in main_board]
 
-        # Compare the created main board with the winning combinations and check for win
         for combination in self.winning_combos:
             if all(replaced_board[i] == value for i, value in
                    enumerate(combination) if value == 1):
@@ -50,6 +74,9 @@ class MainBoard():
 
 
     def update(self):
+        """The MainBoard update logic. Goes through the update functions
+        of all of the SubBoards and checks for wins.
+        """
         # Main Board Logic
         for sub_board in self.sub_boards:
             # Board game has already finished, skipping.
@@ -64,5 +91,12 @@ class MainBoard():
 
 
     def draw(self, screen):
+        """Draws the SubBoards on screen.
+
+        Args:
+            screen (pygame.Surface):
+                The display screen used for pygame. Necessary in order
+                to use the draw function of pygame.
+        """
         for sub_board in self.sub_boards:
             sub_board.draw(screen)
