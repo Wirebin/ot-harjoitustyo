@@ -77,13 +77,11 @@ class MainBoard():
         """The MainBoard update logic. Goes through the update functions
         of all of the SubBoards and checks for wins.
         """
-        # Main Board Logic
         for sub_board in self.sub_boards:
             # Board game has already finished, skipping.
             if sub_board.result:
                 continue
 
-            # Update a board
             sub_board.update()
 
             if self.check_win_main(1) or self.check_win_main(2):
