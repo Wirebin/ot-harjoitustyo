@@ -8,7 +8,7 @@ class Button():
                  location: tuple,
                  size: tuple,
                  button_text: str,
-                 on_click):
+                 on_click, *args, **kwargs):
         """The constructor of the class. Creates an instance of a button.
 
         Args:

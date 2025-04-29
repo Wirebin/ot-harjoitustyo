@@ -49,7 +49,7 @@ class Tile():
                 shapes.cross(screen, pygame.color.Color(200, 0, 0), self.location, self.size)
 
             # Draw a circle
-            elif self.flagged and self.tile_owner == 2:
+            elif self.tile_owner == 2:
                 pygame.draw.rect(screen, (136,96,28), self.button_rect)
                 shapes.circle(screen, pygame.color.Color(0, 0, 200), self.location, self.size)
 
