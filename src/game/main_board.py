@@ -19,6 +19,7 @@ class MainBoard():
                 The size of a singular tile used for the SubBoard games.
         """
         self.state_manager = state_manager
+        self.tile_size = tile_size
         self.location = location
         self.border_size = ceil(tile_size / 10)
         self.border_rect = pygame.rect.Rect(
@@ -46,6 +47,19 @@ class MainBoard():
                     (self.location[0] + i * (tile_size * 3 + self.border_size),
                      self.location[1] + j * (tile_size * 3 + self.border_size)),
                      tile_size))
+
+
+    # def reset(self):
+    #     """Resets the board back to the original state.
+    #     """
+    #     self.player_turn = 1
+    #     self.sub_boards = []
+    #     for i in range(3):
+    #         for j in range(3):
+    #             self.sub_boards.append(SubBoard(self,
+    #                 (self.location[0] + i * (self.tile_size * 3 + self.border_size),
+    #                  self.location[1] + j * (self.tile_size * 3 + self.border_size)),
+    #                  self.tile_size))
 
 
     def check_win_main(self, player):

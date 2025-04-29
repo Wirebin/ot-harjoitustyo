@@ -29,7 +29,6 @@ class StateManager:
         Args:
             state (GameStates): The state to be switched to.
         """
-        if state in GameStates:
-            if self.current_state == state:
-                return
-            self.current_state = state
+        if self.current_state == state:
+            return
+        self.current_state = state

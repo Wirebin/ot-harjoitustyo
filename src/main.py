@@ -31,18 +31,23 @@ restart_button = Button(((WIDTH/2)-(100/2), (HEIGHT)-(80)),
 board = MainBoard(state_manager, ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
 
 
+def restart_game(main_board: MainBoard):
+    main_board.reset()
+    state_manager.go_to_state(GameStates.GAME)
+
+
 def handle_game_state(state: GameStates):
     if state == GameStates.MENU:
         start_button.update()
         start_button.draw(screen)
 
     elif state == GameStates.GAME:
-        pygame.draw.rect(screen, (200, 200, 165),
-                        pygame.rect.Rect(
-                            (WIDTH/2)-(TILE_SIZE*9/2),
-                            (HEIGHT/2)-(TILE_SIZE*9/2),
-                            TILE_SIZE * 9 + TILE_SIZE / 10 + 20,
-                            TILE_SIZE * 9 + TILE_SIZE / 10 + 20))
+        pygame.draw.rect(screen,
+                        (200, 200, 165),
+                        pygame.rect.Rect((WIDTH/2)-(TILE_SIZE*9/2),
+                                        (HEIGHT/2)-(TILE_SIZE*9/2),
+                                        TILE_SIZE * 9 + TILE_SIZE / 10 + 20,
+                                        TILE_SIZE * 9 + TILE_SIZE / 10 + 20))
 
         board.update()
         board.draw(screen)
