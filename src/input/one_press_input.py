@@ -2,7 +2,7 @@ from pygame import mouse
 
 class OnePressInput:
     """Class responsible for detecting singular mouse inputs.
-    It is used as a static class that is shared across all other classes.
+    It is used as a static class that is shared across other classes.
     """
     _prev_mouse_state = [0, 0, 0]
     _current_mouse_state = [0, 0, 0]
