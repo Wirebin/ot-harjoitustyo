@@ -5,7 +5,7 @@ from ui.button import Button
 class TestButton(unittest.TestCase):
     def setUp(self):
         pygame.init()
-        self.button = Button((100,100), (100, 50), "Test")
+        self.button = Button((100,100), (100, 50), "Test", None)
 
     def test_correct_location(self):
         self.assertEqual(self.button.location, (100, 100))

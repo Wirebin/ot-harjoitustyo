@@ -1,10 +1,9 @@
 import unittest
 from game.main_board import MainBoard
-from pygame import Rect
 
 class TestMainBoard(unittest.TestCase):
     def setUp(self):
-        self.board = MainBoard((200, 100), 50)
+        self.board = MainBoard(None, (200, 100), 50)
 
     def test_correct_location(self):
         self.assertEqual(self.board.location, (200, 100))
@@ -17,7 +16,3 @@ class TestMainBoard(unittest.TestCase):
 
     def test_winning_combination_amount(self):
         self.assertEqual(len(self.board.winning_combos), 8)
-
-    # def test_return_false_for_no_winning_combo(self):
-        
-    #     self.assertEqual()
