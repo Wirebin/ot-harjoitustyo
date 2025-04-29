@@ -37,7 +37,7 @@ class MainBoard():
 
     def check_win_main(self, player):
         # Create main game from the sub_board results
-        main_board = [board.tile_owner for board in self.sub_boards]
+        main_board = [board.result for board in self.sub_boards]
         # Replace only the current player numbers with 1 and the rest with 0
         replaced_board = [1 if tile == player else 0 for tile in main_board]
 
@@ -53,7 +53,7 @@ class MainBoard():
         # Main Board Logic
         for sub_board in self.sub_boards:
             # Board game has already finished, skipping.
-            if sub_board.tile_owner:
+            if sub_board.result:
                 continue
 
             # Update a board
