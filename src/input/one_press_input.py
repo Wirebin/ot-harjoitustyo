@@ -34,6 +34,8 @@ class OnePressInput:
         if button_index == 2:
             return cls._prev_mouse_state[2] and not cls._current_mouse_state[2]
 
+        return False
+
 
     @classmethod
     def update(cls):

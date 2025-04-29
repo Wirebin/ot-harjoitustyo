@@ -39,11 +39,11 @@ def handle_game_state(state: GameStates):
     elif state == GameStates.GAME:
         pygame.draw.rect(screen, (200, 200, 165),
                         pygame.rect.Rect(
-                            (WIDTH/2)-(TILE_SIZE*9/2), 
+                            (WIDTH/2)-(TILE_SIZE*9/2),
                             (HEIGHT/2)-(TILE_SIZE*9/2),
                             TILE_SIZE * 9 + TILE_SIZE / 10 + 20,
                             TILE_SIZE * 9 + TILE_SIZE / 10 + 20))
-        
+
         board.update()
         board.draw(screen)
 
