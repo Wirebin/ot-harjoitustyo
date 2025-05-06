@@ -38,8 +38,8 @@ class SubBoard():
         for i in range(3):
             for j in range(3):
                 self.tiles.append(Tile(
-                    ((self.location[0] + (i * tile_size)),
-                     (self.location[1] + (j * tile_size))),
+                    ((self.location[0] + (j * tile_size)),
+                     (self.location[1] + (i * tile_size))),
                     tile_size))
 
 
@@ -75,19 +75,25 @@ class SubBoard():
         """
         mouse_pos = pygame.mouse.get_pos()
 
-        for tile in self.tiles:
-            if tile.button_rect.collidepoint(mouse_pos) and \
-                OnePressInput.is_mouse_clicked(0) and not tile.flagged:
-                tile.flagged = True
+        for i in range(9):
+            if self.tiles[i].button_rect.collidepoint(mouse_pos) and \
+                OnePressInput.is_mouse_clicked(0) and not self.tiles[i].flagged:
+                self.tiles[i].flagged = True
+                self.main_board.update_current_move(i)
+                print(self.main_board.current_move)
 
                 if self.main_board.player_turn == 1:
-                    tile.tile_owner = 1
+                    self.tiles[i].tile_owner = 1
                 elif self.main_board.player_turn == 2:
-                    tile.tile_owner = 2
+                    self.tiles[i].tile_owner = 2
 
                 if self.check_win_sub(self.main_board.player_turn):
                     self.result = self.main_board.player_turn
-                self.main_board.player_turn = 1 if self.main_board.player_turn == 2 else 2
+
+                if self.main_board.player_turn == 2:
+                    self.main_board.update_player_turn(1)
+                else: 
+                    self.main_board.update_player_turn(2)
 
 
     def draw(self, screen):

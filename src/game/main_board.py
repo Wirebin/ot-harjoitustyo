@@ -29,6 +29,7 @@ class MainBoard():
             tile_size * 9 + self.border_size)
 
         self.player_turn = 1
+        self.current_move = None
         self.winning_combos = (
             [1, 1, 1, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 1, 1, 1, 0, 0, 0],
@@ -87,20 +88,31 @@ class MainBoard():
         return False
 
 
+    def update_current_move(self, num: int):
+        self.current_move = num
+
+    def update_player_turn(self, new_turn):
+        self.player_turn = new_turn
+
+
     def update(self):
         """The MainBoard update logic. Goes through the update functions
         of all of the SubBoards and checks for wins.
         """
-        for sub_board in self.sub_boards:
+        for i in range(9):
             # Board game has already finished, skipping.
-            if sub_board.result:
+            if self.sub_boards[i].result:
                 continue
 
-            sub_board.update()
+            if self.current_move != None and self.current_move == i:
+                self.sub_boards[i].update()
 
-            if self.check_win_main(1) or self.check_win_main(2):
-                self.state_manager.go_to_state(GameStates.RESULT)
-
+                if self.check_win_main(1) or self.check_win_main(2):
+                    self.state_manager.go_to_state(GameStates.RESULT)
+                return
+            
+            self.sub_boards[i].update()
+            
 
     def draw(self, screen):
         """Draws the SubBoards on screen.
