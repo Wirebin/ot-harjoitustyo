@@ -35,7 +35,6 @@ class OnePressInput:
 
         return False
 
-
     @classmethod
     def update(cls):
         """Changes the _prev_mouse_state to the _current_mouse_state and

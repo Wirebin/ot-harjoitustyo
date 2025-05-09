@@ -40,7 +40,6 @@ class MainBoard():
                      self.location[1] + i * (tile_size * 3 + self.border_size)),
                      tile_size))
 
-
     # def reset_board(self):
     #     """Resets the board back to the original state.
     #     """
@@ -52,7 +51,6 @@ class MainBoard():
     #                 (self.location[0] + i * (self.tile_size * 3 + self.border_size),
     #                  self.location[1] + j * (self.tile_size * 3 + self.border_size)),
     #                  self.tile_size))
-
 
     def update(self):
         """The MainBoard update logic. Goes through the update functions
@@ -75,7 +73,6 @@ class MainBoard():
 
                 if self.check_win_main(self.turn_manager.get_turn()):
                     self.state_manager.go_to_state(GameStates.RESULT)
-
 
     def check_win_main(self, player):
         """Checks the winning conditions for the MainBoard.
@@ -101,7 +98,6 @@ class MainBoard():
                    enumerate(combination) if value == 1):
                 return True
         return False
-
 
     def draw(self, canvas):
         """Draws the SubBoards on canvas.

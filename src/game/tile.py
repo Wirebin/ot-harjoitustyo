@@ -26,7 +26,6 @@ class Tile():
         self.tile_rect = pygame.Rect(self.location[0], self.location[1], self.size, self.size)
         self.mouse_pos = None
 
-
     def draw(self, canvas):
         """Draws the tile on screen. If tile is flagged, draws either a cross
         or a circle, depending on the tile_owner. Otherwise draws an empty tile 

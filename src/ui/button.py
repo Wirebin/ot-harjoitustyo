@@ -39,7 +39,6 @@ class Button():
 
         self.on_click = on_click
 
-
     def update(self):
         """Used to update the button object logic.
 
@@ -48,7 +47,6 @@ class Button():
         if self.button_rect.collidepoint(pygame.mouse.get_pos()) and \
             OnePressInput.is_mouse_clicked(0):
             self.on_click()
-
 
     def draw(self, canvas):
         """This function handles the drawing of the button on to the canvas.

@@ -49,7 +49,6 @@ class SubBoard():
                      (self.location[1] + (i * tile_size))),
                     tile_size))
 
-
     def update(self):
         """Updates the SubBoard instance logic. Specifically checks if 
         mouse has been clicked over a tile and marks it for the current
@@ -66,7 +65,6 @@ class SubBoard():
             else:
                 tile.is_hovering = False
 
-
     def on_tile_click(self, tile, tile_index):
         tile.flagged = True
         tile.tile_owner = self.turn_manager.get_turn()
@@ -76,7 +74,6 @@ class SubBoard():
 
         self.turn_manager.update_turn()
         self.turn_manager.update_move(tile_index)
-
 
     def check_win_sub(self, player):
         """Checks the winning conditions for SubBoards.
@@ -100,7 +97,6 @@ class SubBoard():
                    enumerate(combination) if value == 1):
                 return True
         return False
-
 
     def draw(self, canvas):
         """Draws the SubBoard which consists of the nine tiles created 
@@ -132,7 +128,6 @@ class SubBoard():
         pygame.draw.rect(canvas, BLACK_COLOR, self.border_rect, self.border_size)
         for tile in self.tiles:
             tile.draw(canvas)
-
 
     def draw_background(self, canvas: pygame.Surface, color: pygame.Color):
         """Draws a background of one color for the board.

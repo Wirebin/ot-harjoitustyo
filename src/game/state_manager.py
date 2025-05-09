@@ -21,7 +21,6 @@ class StateManager:
         else:
             self.current_state = GameStates(self.current_state.value + 1)
 
-
     def go_to_state(self, state: GameStates):
         """Switches the current state to a specified state.
         If current_state is already in given state, do nothing.
