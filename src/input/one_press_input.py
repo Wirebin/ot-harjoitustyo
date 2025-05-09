@@ -20,7 +20,6 @@ class OnePressInput:
 
         Args:
             button_index (int): The index used to differentiate between mouse buttons.
-
         Returns:
             bool: Returns True, if previous mouse state and current mouse state 
             are different. 

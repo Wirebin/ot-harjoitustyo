@@ -8,7 +8,7 @@ class Button():
                  location: tuple,
                  size: tuple,
                  button_text: str,
-                 on_click, *args, **kwargs):
+                 on_click):
         """The constructor of the class. Creates an instance of a button.
 
         Args:
@@ -50,19 +50,19 @@ class Button():
             self.on_click()
 
 
-    def draw(self, screen):
-        """This function handles the drawing of the button on to the screen.
+    def draw(self, canvas):
+        """This function handles the drawing of the button on to the canvas.
         Changes color to indicate whether mouse is currently hovering over button.
 
         Args:
-            screen (pygame.Surface): 
-                The display screen used for pygame. Necessary in order
+            canvas (pygame.Surface): 
+                The display canvas used for pygame. Necessary in order
                 to use the draw function of pygame.
         """
         if self.button_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(screen, (150, 150, 150), self.button_rect)
+            pygame.draw.rect(canvas, (150, 150, 150), self.button_rect)
         else:
-            pygame.draw.rect(screen, (200, 200, 200), self.button_rect)
+            pygame.draw.rect(canvas, (200, 200, 200), self.button_rect)
 
-        screen.blit(self.button_text_render, self.button_text_rect)
+        canvas.blit(self.button_text_render, self.button_text_rect)
         
