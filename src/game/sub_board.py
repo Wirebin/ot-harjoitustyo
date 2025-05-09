@@ -3,31 +3,38 @@ import pygame
 from ui import shapes
 from game.tile import Tile
 from input.one_press_input import OnePressInput
+from game.states import GameStates
+from config.constants import WINNING_COMBOS, BLACK_COLOR
 
 class SubBoard():
     """Class that handles the sub-games of tic-tac-toe. These work as the 
     smaller games, the results of which form one big game of tic-tac-toe.
     """
-    def __init__(self, main_board, location: tuple, tile_size: int):
+    def __init__(self, location: tuple, tile_size: int):
         """The constructor for the SubBoard class. Creates an instance of 
         a SubBoard on specified location.
 
         Creates a list of 9 tiles to make up a 3*3 grid board.
 
         Args:
-            main_board (MainBoard): 
-                MainBoard instance to access player_turn variable.
+            player_turn (int):
+                Keeps track of whose turn it is to play.
+            current_move (int):
+                Keeps track on which sub_board the current move was targeted on.
             location (tuple): 
                 The location of the SubBoard.
             tile_size (int): 
                 The shared tile size passed down from MainBoard.
         """
-        self.main_board = main_board
         self.location = location
         self.result = 0
 
         self.tile_size = tile_size
         self.border_size = ceil(tile_size / 10)
+        self.board_rect = pygame.rect.Rect(
+            location[0], location[1],
+            tile_size * 3, tile_size * 3
+        )
         self.border_rect = pygame.rect.Rect(
             location[0] - self.border_size,
             location[1] - self.border_size,
@@ -53,7 +60,6 @@ class SubBoard():
         Args:
             player (int): 
                 The player which the winning conditions will be checked for.
-
         Returns:
             bool: 
                 Returns True, if the player has won the SubBoard game. 
@@ -61,67 +67,85 @@ class SubBoard():
         """
         replaced_board = [1 if tile.tile_owner == player else 0 for tile in self.tiles]
 
-        for combination in self.main_board.winning_combos:
+        for combination in WINNING_COMBOS:
             if all(replaced_board[i] == value for i, value in
                    enumerate(combination) if value == 1):
                 return True
         return False
 
 
-    def update(self):
+    def update(self, player_turn, current_move):
         """Updates the SubBoard instance logic. Specifically checks if 
         mouse has been clicked over a tile and marks it for the current
         player. 
         """
         mouse_pos = pygame.mouse.get_pos()
 
-        for i in range(9):
-            if self.tiles[i].button_rect.collidepoint(mouse_pos) and \
-                OnePressInput.is_mouse_clicked(0) and not self.tiles[i].flagged:
-                self.tiles[i].flagged = True
-                self.main_board.update_current_move(i)
-                print(self.main_board.current_move)
+        for i, tile in enumerate(self.tiles):
+            if tile.tile_rect.collidepoint(mouse_pos):
+                tile.is_hovering = True
 
-                if self.main_board.player_turn == 1:
-                    self.tiles[i].tile_owner = 1
-                elif self.main_board.player_turn == 2:
-                    self.tiles[i].tile_owner = 2
-
-                if self.check_win_sub(self.main_board.player_turn):
-                    self.result = self.main_board.player_turn
-
-                if self.main_board.player_turn == 2:
-                    self.main_board.update_player_turn(1)
-                else: 
-                    self.main_board.update_player_turn(2)
+                if OnePressInput.is_mouse_clicked(0) and not tile.flagged:
+                    self.on_tile_click(tile, i, player_turn, current_move)
+            else:
+                tile.is_hovering = False
 
 
-    def draw(self, screen):
+    def on_tile_click(self, tile, tile_index, player_turn, current_move):
+        tile.flagged = True
+        current_move = tile_index
+
+        tile.tile_owner = self.player_turn
+
+        if self.check_win_sub(self.player_turn):
+            self.result = self.player_turn
+
+        self.player_turn = 1 if self.player_turn == 2 else 2
+
+        
+        # self.main_board.switch_player_turn(1 if self.main_board.player_turn == 2 else 2)
+
+
+    def draw(self, canvas):
         """Draws the SubBoard which consists of the nine tiles created 
         in the constructor. If the SubBoard game has finished. Displays a
         cross or a circle over the whole SubBoard area depending on who won.
 
         Args:
-            screen (pygame.Surface): 
-                The display screen used for pygame. Necessary in order
+            canvas (pygame.Surface): 
+                The display canvas used for pygame. Necessary in order
                 to use the draw function of pygame.
         """
         if self.result:
-            pygame.draw.rect(screen, (136,96,28), self.border_rect)
-            pygame.draw.rect(screen, (0,0,0), self.border_rect, self.border_size)
+            pygame.draw.rect(canvas, (136, 96, 28, 255), self.border_rect)
+            pygame.draw.rect(canvas, (0, 0, 0, 255), self.border_rect, self.border_size)
 
             if self.result == 1:
-                shapes.cross(screen,
-                             pygame.color.Color(200, 0, 0),
+                shapes.cross(canvas,
+                             pygame.color.Color(200, 0, 0, 255),
                              self.location,
                              self.tile_size * 3)
             elif self.result == 2:
-                shapes.circle(screen,
-                              pygame.color.Color(0, 0, 200),
+                shapes.circle(canvas,
+                              pygame.color.Color(0, 0, 200, 255),
                               self.location,
                               self.tile_size * 3)
             return
 
-        pygame.draw.rect(screen, (0,0,0), self.border_rect, self.border_size)
+        # Border for board
+        pygame.draw.rect(canvas, BLACK_COLOR, self.border_rect, self.border_size)
         for tile in self.tiles:
-            tile.draw(screen)
+            tile.draw(canvas)
+
+
+    def draw_background(self, canvas: pygame.Surface, color: pygame.Color):
+        """Draws a background of one color for the board.
+
+        Args:
+            canvas (pygame.Surface):
+                The display canvas used for pygame. Necessary in order
+                to use the draw function of pygame.
+            color (pygame.Color):
+                The color of the background.
+        """
+        pygame.draw.rect(canvas, color, self.board_rect)

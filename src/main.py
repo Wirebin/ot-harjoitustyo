@@ -4,18 +4,16 @@ from ui.button import Button
 from input.one_press_input import OnePressInput
 from game.states import GameStates
 from game.main_board import MainBoard
+from game.sub_board import SubBoard
 from game.state_manager import StateManager
+from config.constants import WIDTH, HEIGHT, TILE_SIZE, BACKGROUND_COLOR
 
 pygame.init()
-FPS = 30
-FPS_CLOCK = pygame.time.Clock()
-
-WIDTH = 600
-HEIGHT = 500
-TILE_SIZE = 30
-BACKGROUND_COLOR = (214, 212, 185)
+fps = 60
+fps_clock = pygame.time.Clock()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+canvas = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
 state_manager = StateManager()
 
 start_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
@@ -29,7 +27,9 @@ restart_button = Button(((WIDTH/2)-(100/2), (HEIGHT)-(80)),
 
 # Place board on the center of the screen
 board = MainBoard(state_manager, ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
-
+a = 1
+b= None
+test_board = SubBoard(a, b, (20,20), 30)
 
 def restart_game(main_board: MainBoard):
     main_board.reset()
@@ -39,27 +39,24 @@ def restart_game(main_board: MainBoard):
 def handle_game_state(state: GameStates):
     if state == GameStates.MENU:
         start_button.update()
-        start_button.draw(screen)
+        start_button.draw(canvas)
 
     elif state == GameStates.GAME:
-        pygame.draw.rect(screen,
-                        (200, 200, 165),
-                        pygame.rect.Rect((WIDTH/2)-(TILE_SIZE*9/2),
-                                        (HEIGHT/2)-(TILE_SIZE*9/2),
-                                        TILE_SIZE * 9 + TILE_SIZE / 10 + 20,
-                                        TILE_SIZE * 9 + TILE_SIZE / 10 + 20))
+        test_board.update()
+        test_board.draw(canvas)
 
         board.update()
-        board.draw(screen)
+        board.draw(canvas)
 
     elif state == GameStates.RESULT:
         restart_button.update()
-        board.draw(screen)
-        restart_button.draw(screen)
+        board.draw(canvas)
+        restart_button.draw(canvas)
 
 
 def run():
     while True:
+        fps_clock.tick(fps)
         screen.fill(BACKGROUND_COLOR)
         OnePressInput.update()
 
@@ -70,8 +67,8 @@ def run():
 
         handle_game_state(state_manager.current_state)
 
+        screen.blit(canvas, (0, 0))
         pygame.display.flip()
-        FPS_CLOCK.tick()
 
 
 if __name__ == "__main__":

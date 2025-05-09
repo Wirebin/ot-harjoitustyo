@@ -1,8 +1,9 @@
 import pygame
 from ui import shapes
+from config.constants import RED_COLOR, BLUE_COLOR, BLACK_COLOR, TILE_COLOR_HOVER
 
 class Tile():
-    """Class for a game tile that allows you to place your shape on it.
+    """Class for a game tile that allows you to place your game piece on it.
     """
     def __init__(self, location: tuple, size: int):
         """The constructor for the Tile class. Creates an instance 
@@ -19,38 +20,35 @@ class Tile():
         self.size = size
         self.location = location
         self.flagged = False
-        self.tile_owner = 0     # 0 = None, 1 = X, 2 = O
+        self.is_hovering = False
+        self.tile_owner = 0     # 0 = None, 1 = Cross, 2 = Circle
 
-        self.button_rect = pygame.Rect(self.location[0], self.location[1], self.size, self.size)
+        self.tile_rect = pygame.Rect(self.location[0], self.location[1], self.size, self.size)
         self.mouse_pos = None
 
 
-    def draw(self, screen):
+    def draw(self, canvas):
         """Draws the tile on screen. If tile is flagged, draws either a cross
         or a circle, depending on the tile_owner. Otherwise draws an empty tile 
         with mouse hover over effect.
 
         Args:
-            screen (pygame.Surface): 
-                The display screen used for pygame. Necessary in order
+            canvas (pygame.Surface): 
+                The display canvas used for pygame. Necessary in order
                 to use the draw function of pygame.
         """
-        if not self.flagged:
-            if self.button_rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.draw.rect(screen, (136,96,28), self.button_rect)
+        if not self.flagged and self.is_hovering:
+            pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
 
-            else:
-                pygame.draw.rect(screen, (177,124,36), self.button_rect)
+        if self.flagged and self.tile_owner == 1:
+        # Draw a cross
+            pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
+            shapes.cross(canvas, pygame.color.Color(RED_COLOR), self.location, self.size)
 
-        else:
-            # Draw a cross
-            if self.tile_owner == 1:
-                pygame.draw.rect(screen, (136,96,28), self.button_rect)
-                shapes.cross(screen, pygame.color.Color(200, 0, 0), self.location, self.size)
+        # Draw a circle
+        elif self.flagged and self.tile_owner == 2:
+            pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
+            shapes.circle(canvas, pygame.color.Color(BLUE_COLOR), self.location, self.size)
 
-            # Draw a circle
-            elif self.tile_owner == 2:
-                pygame.draw.rect(screen, (136,96,28), self.button_rect)
-                shapes.circle(screen, pygame.color.Color(0, 0, 200), self.location, self.size)
-
-        pygame.draw.rect(screen, (0,0,0), self.button_rect, 1)
+        # Draw border for tile
+        pygame.draw.rect(canvas, BLACK_COLOR, self.tile_rect, 1)
