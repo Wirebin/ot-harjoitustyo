@@ -21,7 +21,7 @@ class Tile():
         self.location = location
         self.flagged = False
         self.is_hovering = False
-        self.tile_owner = 0     # 0 = None, 1 = Cross, 2 = Circle
+        self.tile_owner = None     # False = Player 1, True = Player 2
 
         self.tile_rect = pygame.Rect(self.location[0], self.location[1], self.size, self.size)
         self.mouse_pos = None
@@ -40,13 +40,13 @@ class Tile():
         if not self.flagged and self.is_hovering:
             pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
 
-        if self.flagged and self.tile_owner == 1:
+        if self.flagged and not self.tile_owner:
         # Draw a cross
             pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
             shapes.cross(canvas, pygame.color.Color(RED_COLOR), self.location, self.size)
 
         # Draw a circle
-        elif self.flagged and self.tile_owner == 2:
+        elif self.flagged and self.tile_owner:
             pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
             shapes.circle(canvas, pygame.color.Color(BLUE_COLOR), self.location, self.size)
 

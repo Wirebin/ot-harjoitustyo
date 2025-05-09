@@ -4,8 +4,8 @@ from ui.button import Button
 from input.one_press_input import OnePressInput
 from game.states import GameStates
 from game.main_board import MainBoard
-from game.sub_board import SubBoard
 from game.state_manager import StateManager
+from game.turn_manager import TurnManager
 from config.constants import WIDTH, HEIGHT, TILE_SIZE, BACKGROUND_COLOR
 
 pygame.init()
@@ -15,6 +15,7 @@ fps_clock = pygame.time.Clock()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 canvas = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
 state_manager = StateManager()
+turn_manager = TurnManager(False)
 
 start_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
                       (100, 50),
@@ -26,10 +27,7 @@ restart_button = Button(((WIDTH/2)-(100/2), (HEIGHT)-(80)),
                         None)
 
 # Place board on the center of the screen
-board = MainBoard(state_manager, ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
-a = 1
-b= None
-test_board = SubBoard(a, b, (20,20), 30)
+board = MainBoard(state_manager, turn_manager, ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
 
 def restart_game(main_board: MainBoard):
     main_board.reset()
@@ -42,9 +40,6 @@ def handle_game_state(state: GameStates):
         start_button.draw(canvas)
 
     elif state == GameStates.GAME:
-        test_board.update()
-        test_board.draw(canvas)
-
         board.update()
         board.draw(canvas)
 

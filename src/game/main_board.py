@@ -7,19 +7,22 @@ from config.constants import WINNING_COMBOS, HIGHLIGHT_COLOR
 class MainBoard():
     """Class that handles the MainBoard.
     """
-    def __init__(self, state_manager, location: tuple, tile_size: int):
+    def __init__(self, state_manager, turn_manager, location: tuple, tile_size: int):
         """The constructor for the MainBoard class. Creates a MainBoard
         instance at the specified location. 
 
         Args:
             state_manager (StateManager):
                 A state manager instance used to switch game states.
+            turn_manager (TurnManager):
+                A turn manager instance to keep track of the game.
             location (tuple):
                 The location of the MainBoard instance.
             tile_size (int):
                 The size of a singular tile used for the SubBoard games.
         """
         self.state_manager = state_manager
+        self.turn_manager = turn_manager
         self.tile_size = tile_size
         self.location = location
         self.border_size = ceil(tile_size / 10)
@@ -29,13 +32,10 @@ class MainBoard():
             tile_size * 9 + self.border_size,
             tile_size * 9 + self.border_size)
 
-        self.player_turn = 1
-        self.current_move = None
-
         self.sub_boards = []
         for i in range(3):
             for j in range(3):
-                self.sub_boards.append(SubBoard(self.player_turn, self.current_move,
+                self.sub_boards.append(SubBoard(self.turn_manager,
                     (self.location[0] + j * (tile_size * 3 + self.border_size),
                      self.location[1] + i * (tile_size * 3 + self.border_size)),
                      tile_size))
@@ -54,6 +54,29 @@ class MainBoard():
     #                  self.tile_size))
 
 
+    def update(self):
+        """The MainBoard update logic. Goes through the update functions
+        of all of the SubBoards and checks for wins.
+        """
+        for i, board in enumerate(self.sub_boards):
+            # Board game has already finished, skipping.
+            if board.result:
+                continue
+
+            if self.turn_manager.get_move() is not None and self.turn_manager.get_move() == i:
+                board.update()
+
+                if self.check_win_main(not self.turn_manager.get_turn()):
+                    self.state_manager.go_to_state(GameStates.RESULT)
+                return
+            
+            if self.turn_manager.get_move() is None:
+                board.update()
+
+                if self.check_win_main(self.turn_manager.get_turn()):
+                    self.state_manager.go_to_state(GameStates.RESULT)
+
+
     def check_win_main(self, player):
         """Checks the winning conditions for the MainBoard.
 
@@ -69,7 +92,9 @@ class MainBoard():
                 Otherwise returns False.
         """
         main_board = [board.result for board in self.sub_boards]
-        replaced_board = [1 if tile == player else 0 for tile in main_board]
+        replaced_board = [1 if board == player else 0 for board in main_board]
+        print(f"{main_board}   {replaced_board}    {player}")
+
 
         for combination in WINNING_COMBOS:
             if all(replaced_board[i] == value for i, value in
@@ -77,36 +102,6 @@ class MainBoard():
                 return True
         return False
 
-
-    def switch_player_turn(self, new_turn):
-        self.player_turn = new_turn
-
-    def update_current_move(self, num: int):
-        self.current_move = num
-
-
-    def update(self):
-        """The MainBoard update logic. Goes through the update functions
-        of all of the SubBoards and checks for wins.
-        """
-        for i, board in enumerate(self.sub_boards):
-            # Board game has already finished, skipping.
-            if board.result:
-                continue
-
-            if self.current_move is not None and self.current_move == i:
-                board.update()
-
-                if self.check_win_main(self.player_turn):
-                    self.state_manager.go_to_state(GameStates.RESULT)
-                return
-            
-            if self.current_move is None:
-                board.update()
-
-                if self.check_win_main(self.player_turn):
-                    self.state_manager.go_to_state(GameStates.RESULT)
-            
 
     def draw(self, canvas):
         """Draws the SubBoards on canvas.
@@ -117,8 +112,9 @@ class MainBoard():
                 to use the draw function of pygame.
         """
         for i, board in enumerate(self.sub_boards):
-            if self.current_move == None or self.current_move == None and \
-                self.current_move == i:
+            move = self.turn_manager.get_move()
+            if move is None or \
+                move is not None and move == i:
                 board.draw_background(canvas, HIGHLIGHT_COLOR)
             else:
                 board.draw_background(canvas, (171, 123, 42, 255))

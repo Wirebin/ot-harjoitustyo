@@ -3,14 +3,13 @@ import pygame
 from ui import shapes
 from game.tile import Tile
 from input.one_press_input import OnePressInput
-from game.states import GameStates
 from config.constants import WINNING_COMBOS, BLACK_COLOR
 
 class SubBoard():
     """Class that handles the sub-games of tic-tac-toe. These work as the 
     smaller games, the results of which form one big game of tic-tac-toe.
     """
-    def __init__(self, location: tuple, tile_size: int):
+    def __init__(self, turn_manager, location: tuple, tile_size: int):
         """The constructor for the SubBoard class. Creates an instance of 
         a SubBoard on specified location.
 
@@ -26,8 +25,9 @@ class SubBoard():
             tile_size (int): 
                 The shared tile size passed down from MainBoard.
         """
+        self.turn_manager = turn_manager
         self.location = location
-        self.result = 0
+        self.result = None
 
         self.tile_size = tile_size
         self.border_size = ceil(tile_size / 10)
@@ -48,6 +48,34 @@ class SubBoard():
                     ((self.location[0] + (j * tile_size)),
                      (self.location[1] + (i * tile_size))),
                     tile_size))
+
+
+    def update(self):
+        """Updates the SubBoard instance logic. Specifically checks if 
+        mouse has been clicked over a tile and marks it for the current
+        player. 
+        """
+        mouse_pos = pygame.mouse.get_pos()
+
+        for i, tile in enumerate(self.tiles):
+            if tile.tile_rect.collidepoint(mouse_pos):
+                tile.is_hovering = True
+
+                if OnePressInput.is_mouse_clicked(0) and not tile.flagged:
+                    self.on_tile_click(tile, i)
+            else:
+                tile.is_hovering = False
+
+
+    def on_tile_click(self, tile, tile_index):
+        tile.flagged = True
+        tile.tile_owner = self.turn_manager.get_turn()
+
+        if self.check_win_sub(self.turn_manager.get_turn()):
+            self.result = self.turn_manager.get_turn()
+
+        self.turn_manager.update_turn()
+        self.turn_manager.update_move(tile_index)
 
 
     def check_win_sub(self, player):
@@ -74,38 +102,6 @@ class SubBoard():
         return False
 
 
-    def update(self, player_turn, current_move):
-        """Updates the SubBoard instance logic. Specifically checks if 
-        mouse has been clicked over a tile and marks it for the current
-        player. 
-        """
-        mouse_pos = pygame.mouse.get_pos()
-
-        for i, tile in enumerate(self.tiles):
-            if tile.tile_rect.collidepoint(mouse_pos):
-                tile.is_hovering = True
-
-                if OnePressInput.is_mouse_clicked(0) and not tile.flagged:
-                    self.on_tile_click(tile, i, player_turn, current_move)
-            else:
-                tile.is_hovering = False
-
-
-    def on_tile_click(self, tile, tile_index, player_turn, current_move):
-        tile.flagged = True
-        current_move = tile_index
-
-        tile.tile_owner = self.player_turn
-
-        if self.check_win_sub(self.player_turn):
-            self.result = self.player_turn
-
-        self.player_turn = 1 if self.player_turn == 2 else 2
-
-        
-        # self.main_board.switch_player_turn(1 if self.main_board.player_turn == 2 else 2)
-
-
     def draw(self, canvas):
         """Draws the SubBoard which consists of the nine tiles created 
         in the constructor. If the SubBoard game has finished. Displays a
@@ -116,16 +112,16 @@ class SubBoard():
                 The display canvas used for pygame. Necessary in order
                 to use the draw function of pygame.
         """
-        if self.result:
+        if self.result is not None:
             pygame.draw.rect(canvas, (136, 96, 28, 255), self.border_rect)
             pygame.draw.rect(canvas, (0, 0, 0, 255), self.border_rect, self.border_size)
 
-            if self.result == 1:
+            if not self.result:
                 shapes.cross(canvas,
                              pygame.color.Color(200, 0, 0, 255),
                              self.location,
                              self.tile_size * 3)
-            elif self.result == 2:
+            elif self.result:
                 shapes.circle(canvas,
                               pygame.color.Color(0, 0, 200, 255),
                               self.location,
