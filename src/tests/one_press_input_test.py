@@ -1,10 +1,15 @@
 import unittest
+import pygame
 from input.one_press_input import OnePressInput
 
 class TestOnePressInput(unittest.TestCase):
     def setUp(self):
+        pygame.init()
         OnePressInput._prev_mouse_state = (0, 0, 0)
         OnePressInput._current_mouse_state = (0, 0, 0)
+
+    def tearDown(self):
+        pygame.quit()
 
     def test_is_mouse_clicked_on_button_index(self):
         OnePressInput._prev_mouse_state = (1, 0, 0)

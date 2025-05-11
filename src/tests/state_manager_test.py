@@ -17,6 +17,7 @@ class TestStateManager(unittest.TestCase):
         self.assertEqual(self.state_manager.current_state, GameStates.GAME)
         self.state_manager.next_state()
         self.state_manager.next_state()
+        self.assertEqual(self.state_manager.current_state, GameStates.MENU)
 
     def test_go_to_state(self):
         manager = StateManager()

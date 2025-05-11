@@ -5,7 +5,12 @@ from ui.button import Button
 class TestButton(unittest.TestCase):
     def setUp(self):
         pygame.init()
-        self.button = Button((100,100), (100, 50), "Test", None)
+        def click_return_true():
+            return True
+        self.button = Button((100,100), (100, 50), "Test", click_return_true)
+
+    def tearDown(self):
+        pygame.quit()
 
     def test_correct_location(self):
         self.assertEqual(self.button._location, (100, 100))
@@ -15,3 +20,6 @@ class TestButton(unittest.TestCase):
 
     def test_correct_text(self):
         self.assertEqual(self.button._text._text, "Test")
+
+    def test_on_click_function_working(self):
+        self.assertEqual(self.button._on_click(), True)

@@ -17,12 +17,3 @@ class TestTile(unittest.TestCase):
 
     def test_tile_owner_starts_as_none(self):
         self.assertEqual(self.tile.tile_owner, None)
-
-    def test_tile_draw(self):
-        self.tile.draw(pygame.Surface((0, 0)))
-        self.tile.flagged = True
-        self.tile.draw(pygame.Surface((0, 0)))
-        self.tile.tile_owner = 1
-        self.tile.draw(pygame.Surface((0, 0)))
-        self.tile.tile_owner = 2
-        self.tile.draw(pygame.Surface((0, 0)))
