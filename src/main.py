@@ -6,7 +6,9 @@ from game.states import GameStates
 from game.main_board import MainBoard
 from game.state_manager import StateManager
 from game.turn_manager import TurnManager
-from config.constants import WIDTH, HEIGHT, TILE_SIZE, BACKGROUND_COLOR
+from ui.shapes import cross, circle
+from config.constants import WIDTH, HEIGHT, TILE_SIZE, BACKGROUND_COLOR, \
+                             BLUE_COLOR, RED_COLOR
 
 pygame.init()
 fps = 60
@@ -17,29 +19,43 @@ canvas = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
 state_manager = StateManager()
 turn_manager = TurnManager(False)
 
-start_button = Button(((WIDTH/2)-(100/2), (HEIGHT/2)-(70/2)),
-                      (100, 50),
-                      "Start",
-                      state_manager.next_state)
-restart_button = Button(((WIDTH/2)-(100/2), (HEIGHT)-(80)),
-                        (120, 50),
-                        "Restart",
-                        None)
-
 # Place board on the center of the screen
 board = MainBoard(state_manager, turn_manager, ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
 
-def restart_game(main_board: MainBoard):
-    main_board.reset()
+
+def restart_game():
+    board.reset_board()
     state_manager.go_to_state(GameStates.GAME)
 
+
+start_button = Button(((WIDTH / 2) - (100 / 2), (HEIGHT / 2) - 60),
+                      (120, 50),
+                      "Start",
+                      state_manager.next_state)
+
+quit_button = Button(((WIDTH / 2) - (100 / 2), (HEIGHT / 2)),
+                      (120, 50),
+                      "Quit",
+                      exit)
+
+restart_button = Button(((WIDTH / 2) - (100 / 2), (HEIGHT) - (80)),
+                        (120, 50),
+                        "Restart",
+                        restart_game)
 
 def handle_game_state(state: GameStates):
     if state == GameStates.MENU:
         start_button.update()
+        quit_button.update()
         start_button.draw(canvas)
+        quit_button.draw(canvas)
 
     elif state == GameStates.GAME:
+        if not turn_manager.player_turn:
+            cross(canvas, RED_COLOR, (WIDTH / 2 - 100, 20), 60)
+        else:
+            circle(canvas, BLUE_COLOR, (WIDTH / 2 - 100, 20), 60)
+
         board.update()
         board.draw(canvas)
 
@@ -52,7 +68,7 @@ def handle_game_state(state: GameStates):
 def run():
     while True:
         fps_clock.tick(fps)
-        screen.fill(BACKGROUND_COLOR)
+        canvas.fill(BACKGROUND_COLOR)
         OnePressInput.update()
 
         for event in pygame.event.get():
