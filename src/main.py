@@ -47,33 +47,43 @@ restart_button = Button(((WIDTH / 2) - (100 / 2), (HEIGHT) - (80)),
 current_turn_text = Text((WIDTH / 2 - 40, 45), 50, BLACK_COLOR, "to Move:")
 winner_text = Text((WIDTH / 2 - 90, 45), 50, BLACK_COLOR, "wins the game!")
 
+def menu_screen():
+    start_button.update()
+    quit_button.update()
+    start_button.draw(canvas)
+    quit_button.draw(canvas)
+
+
+def game_screen():
+    if not turn_manager.get_turn():
+        ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 110, 20), 60)
+    elif turn_manager.get_turn():
+        ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 110, 20), 60)
+    current_turn_text.draw(canvas)
+
+    board.update()
+    board.draw(canvas)
+
+
+def result_screen():
+    if not turn_manager.get_winner():
+        ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 160, 20), 60)
+    else:
+        ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 160, 20), 60)
+
+    restart_button.update()
+    winner_text.draw(canvas)
+    board.draw(canvas)
+    restart_button.draw(canvas)
+
+
 def handle_game_state(state: GameStates):
     if state == GameStates.MENU:
-        start_button.update()
-        quit_button.update()
-        start_button.draw(canvas)
-        quit_button.draw(canvas)
-
+        menu_screen()
     elif state == GameStates.GAME:
-        if not turn_manager.get_turn():
-            ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 110, 20), 60)
-        elif turn_manager.get_turn():
-            ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 110, 20), 60)
-        current_turn_text.draw(canvas)
-
-        board.update()
-        board.draw(canvas)
-
+        game_screen()
     elif state == GameStates.RESULT:
-        if not turn_manager.get_winner():
-            ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 160, 20), 60)
-        elif turn_manager.get_winner:
-            ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 160, 20), 60)
-        
-        restart_button.update()
-        winner_text.draw(canvas)
-        board.draw(canvas)
-        restart_button.draw(canvas)
+        result_screen()
 
 
 def run():
