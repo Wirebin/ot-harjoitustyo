@@ -67,11 +67,11 @@ class MainBoard():
                 self.turn_manager.get_move() is None:
                 board.update()
 
-                if self.check_win_main(not self.turn_manager.get_turn()):
+                if self._check_win_main(not self.turn_manager.get_turn()):
                     self.turn_manager.set_winner(not self.turn_manager.get_turn())
                     self.state_manager.go_to_state(GameStates.RESULT)
 
-    def check_win_main(self, player):
+    def _check_win_main(self, player):
         """Checks the winning conditions for the MainBoard.
 
         Compares the winning combinations with the results from the SubBoard
@@ -111,10 +111,3 @@ class MainBoard():
                 board.draw_background(canvas, (171, 123, 42, 255))
 
             board.draw(canvas)
-
-        # pygame.draw.rect(canvas,
-        #     (200, 200, 165, 255),
-        #     pygame.rect.Rect((WIDTH/2)-(TILE_SIZE*9/2),
-        #                     (HEIGHT/2)-(TILE_SIZE*9/2),
-        #                     TILE_SIZE * 9 + TILE_SIZE / 10 + 20,
-        #                     TILE_SIZE * 9 + TILE_SIZE / 10 + 20))

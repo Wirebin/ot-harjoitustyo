@@ -26,29 +26,29 @@ class Button():
                 The function that is called when the button is pressed. Without specifying
                 a function here, the button won't work. 
         """
-        self.location = location
-        self.size = size
+        self._location = location
+        self._size = size
 
-        self.button_rect = pygame.Rect(self.location[0],
-                                       self.location[1],
-                                       self.size[0],
-                                       self.size[1])
+        self._button_rect = pygame.Rect(self._location[0],
+                                       self._location[1],
+                                       self._size[0],
+                                       self._size[1])
 
-        self.text = Text(self.button_rect.center,
-                         self.button_rect.height - 10,
+        self._text = Text(self._button_rect.center,
+                         self._button_rect.height - 10,
                          BLACK_COLOR,
                          button_text,
                          "center")
-        self.on_click = on_click
+        self._on_click = on_click
 
     def update(self):
         """Used to update the button object logic.
 
-        If mouse is clicked on top of the button, the update calls the on_click() function
+        If mouse is clicked on top of the button, the update calls the _on_click() function
         """
-        if self.button_rect.collidepoint(pygame.mouse.get_pos()) and \
+        if self._button_rect.collidepoint(pygame.mouse.get_pos()) and \
             OnePressInput.is_mouse_clicked(0):
-            self.on_click()
+            self._on_click()
 
     def draw(self, canvas):
         """This function handles the drawing of the button on to the canvas.
@@ -59,10 +59,10 @@ class Button():
                 The display canvas used for pygame. Necessary in order
                 to use the draw function of pygame.
         """
-        if self.button_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(canvas, BUTTON_COLOR_HOVER, self.button_rect)
+        if self._button_rect.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(canvas, BUTTON_COLOR_HOVER, self._button_rect)
         else:
-            pygame.draw.rect(canvas, BUTTON_COLOR_NORMAL, self.button_rect)
+            pygame.draw.rect(canvas, BUTTON_COLOR_NORMAL, self._button_rect)
 
-        self.text.draw(canvas)
+        self._text.draw(canvas)
         

@@ -35,7 +35,7 @@ class SubBoard():
             location[0], location[1],
             tile_size * 3, tile_size * 3
         )
-        self.border_rect = pygame.rect.Rect(
+        self._border_rect = pygame.rect.Rect(
             location[0] - self.border_size,
             location[1] - self.border_size,
             tile_size * 3 + self.border_size * 2,
@@ -61,21 +61,21 @@ class SubBoard():
                 tile.is_hovering = True
 
                 if OnePressInput.is_mouse_clicked(0) and not tile.flagged:
-                    self.on_tile_click(tile, i)
+                    self._on_tile_click(tile, i)
             else:
                 tile.is_hovering = False
 
-    def on_tile_click(self, tile, tile_index):
+    def _on_tile_click(self, tile, tile_index):
         tile.flagged = True
         tile.tile_owner = self.turn_manager.get_turn()
 
-        if self.check_win_sub(self.turn_manager.get_turn()):
+        if self._check_win_sub(self.turn_manager.get_turn()):
             self.result = self.turn_manager.get_turn()
 
         self.turn_manager.update_turn(not self.turn_manager.get_turn())
         self.turn_manager.update_move(tile_index)
 
-    def check_win_sub(self, player):
+    def _check_win_sub(self, player):
         """Checks the winning conditions for SubBoards.
 
         Creates a temporary board that replaces all but the players values on the board
@@ -109,8 +109,8 @@ class SubBoard():
                 to use the draw function of pygame.
         """
         if self.result is not None:
-            pygame.draw.rect(canvas, (136, 96, 28, 255), self.border_rect)
-            pygame.draw.rect(canvas, (0, 0, 0, 255), self.border_rect, self.border_size)
+            pygame.draw.rect(canvas, (136, 96, 28, 255), self._border_rect)
+            pygame.draw.rect(canvas, (0, 0, 0, 255), self._border_rect, self.border_size)
 
             if not self.result:
                 shapes.cross(canvas,
@@ -125,7 +125,7 @@ class SubBoard():
             return
 
         # Border for board
-        pygame.draw.rect(canvas, BLACK_COLOR, self.border_rect, self.border_size)
+        pygame.draw.rect(canvas, BLACK_COLOR, self._border_rect, self.border_size)
         for tile in self.tiles:
             tile.draw(canvas)
 

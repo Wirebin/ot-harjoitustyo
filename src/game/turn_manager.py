@@ -2,7 +2,7 @@ class TurnManager():
     """Keeps track and updates the turns and moves made in the game.
     """
     def __init__(self, starting_player: bool):
-        """The constructor for the TurnManager class. Creates player_turn and 
+        """The constructor for the TurnManager class. Creates _player_turn and 
         current_move variables to keep track of the game.
 
         Args:
@@ -10,25 +10,25 @@ class TurnManager():
                 The player that starts the game. Using a boolean, as this 
                 is a 2 player game.
         """
-        self.player_turn = starting_player
-        self.current_move = None
-        self.winner = None
+        self._player_turn = starting_player
+        self._current_move = None
+        self._winner = None
 
     def get_turn(self):
-        """Gets the current player_turn value.
+        """Gets the current _player_turn value.
 
         Returns:
-            bool: Returns the player_turn variable.
+            bool: Returns the _player_turn variable.
         """
-        return self.player_turn
+        return self._player_turn
 
     def get_move(self):
-        """Gets the current_move value.
+        """Gets the _current_move value.
 
         Returns:
-            int: Returns the current_move variable.
+            int: Returns the _current_move variable.
         """
-        return self.current_move
+        return self._current_move
 
     def get_winner(self):
         """Gets the winner of the game
@@ -36,25 +36,25 @@ class TurnManager():
         Returns:
             bool: Returns the winner of the game.
         """
-        return self.winner
+        return self._winner
 
     def update_turn(self, next_turn: bool):
-        """Updates the player_turn variable to the next player.
+        """Updates the _player_turn variable to the next player.
 
         Args:
             next_turn (bool):
-                The boolean which player_turn variable will be updated to.
+                The boolean which _player_turn variable will be updated to.
         """
-        self.player_turn = next_turn
+        self._player_turn = next_turn
 
     def update_move(self, next_move: int):
-        """Updates the current_move variable to the provided integer.
+        """Updates the _current_move variable to the provided integer.
 
         Args:
             next_move (int):
-                The integer which current_move variable will be updated to.
+                The integer which _current_move variable will be updated to.
         """
-        self.current_move = next_move
+        self._current_move = next_move
 
     def set_winner(self, winner: bool):
         """Sets the winner of the game as boolean.
@@ -63,4 +63,4 @@ class TurnManager():
             winner (bool): 
                 The winner of the game. False for X/Cross and True for O/Circle.
         """
-        self.winner = winner
+        self._winner = winner

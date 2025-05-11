@@ -16,7 +16,7 @@ class TestSubBoard(unittest.TestCase):
         self.assertEqual(self.board.border_size, 5)
 
     def test_correct_border_rect(self):
-        self.assertEqual(self.board.border_rect, Rect(200 - 5,
+        self.assertEqual(self.board._border_rect, Rect(200 - 5,
                                                       100 - 5,
                                                       50 * 3 + 5 * 2,
                                                       50 * 3 + 5 * 2))

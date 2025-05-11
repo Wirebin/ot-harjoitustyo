@@ -17,14 +17,13 @@ class Tile():
             location (tuple): The location of the tile on screen.
             size (int): The size of the tile.
         """
-        self.size = size
-        self.location = location
-        self.flagged = False
-        self.is_hovering = False
-        self.tile_owner = None     # False = Player 1, True = Player 2
+        self._location = location
+        self._size = size
 
-        self.tile_rect = pygame.Rect(self.location[0], self.location[1], self.size, self.size)
-        self.mouse_pos = None
+        self.tile_rect = pygame.Rect(location[0], location[1], size, size)
+        self.is_hovering = False
+        self.flagged = False
+        self.tile_owner = None     # False = Player 1, True = Player 2
 
     def draw(self, canvas):
         """Draws the tile on screen. If tile is flagged, draws either a cross
@@ -42,12 +41,12 @@ class Tile():
         if self.flagged and not self.tile_owner:
         # Draw a cross
             pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
-            shapes.cross(canvas, pygame.color.Color(RED_COLOR), self.location, self.size)
+            shapes.cross(canvas, pygame.color.Color(RED_COLOR), self._location, self._size)
 
         # Draw a circle
         elif self.flagged and self.tile_owner:
             pygame.draw.rect(canvas, TILE_COLOR_HOVER, self.tile_rect)
-            shapes.circle(canvas, pygame.color.Color(BLUE_COLOR), self.location, self.size)
+            shapes.circle(canvas, pygame.color.Color(BLUE_COLOR), self._location, self._size)
 
         # Draw border for tile
         pygame.draw.rect(canvas, BLACK_COLOR, self.tile_rect, 1)

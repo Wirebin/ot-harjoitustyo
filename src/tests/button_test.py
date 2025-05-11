@@ -8,10 +8,10 @@ class TestButton(unittest.TestCase):
         self.button = Button((100,100), (100, 50), "Test", None)
 
     def test_correct_location(self):
-        self.assertEqual(self.button.location, (100, 100))
+        self.assertEqual(self.button._location, (100, 100))
 
     def test_correct_size(self):
-        self.assertEqual(self.button.size, (100, 50))
+        self.assertEqual(self.button._size, (100, 50))
 
     def test_correct_text(self):
-        self.assertEqual(self.button.text.text, "Test")
+        self.assertEqual(self.button._text._text, "Test")

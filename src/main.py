@@ -23,12 +23,12 @@ turn_manager = TurnManager(False)
 board = MainBoard(state_manager, turn_manager,
                   ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
 
-
 def restart_game():
     board.reset_board()
     state_manager.go_to_state(GameStates.GAME)
 
 
+# Create UI elements:
 start_button = Button(((WIDTH / 2) - (100 / 2), (HEIGHT / 2) - 60),
                       (120, 50),
                       "Start",
@@ -55,9 +55,9 @@ def handle_game_state(state: GameStates):
         quit_button.draw(canvas)
 
     elif state == GameStates.GAME:
-        if not turn_manager.player_turn:
+        if not turn_manager.get_turn():
             ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 110, 20), 60)
-        elif turn_manager.player_turn:
+        elif turn_manager.get_turn():
             ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 110, 20), 60)
         current_turn_text.draw(canvas)
 

@@ -7,15 +7,15 @@ class StateManager:
     def __init__(self):
         """The constructor for the StateManager. 
         """
+        self._state_amount = len(GameStates)
         self.current_state = GameStates.MENU
-        self.state_amount = len(GameStates)
 
     def next_state(self):
         """Switches a state to the next one by iterating the 
         current_state by one. Checks if current_state is over
         the state amount and prevents overflow.
         """
-        if self.current_state.value >= self.state_amount:
+        if self.current_state.value >= self._state_amount:
             self.current_state = GameStates.MENU
 
         else:

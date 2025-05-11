@@ -10,7 +10,7 @@ class TestStateManager(unittest.TestCase):
         self.assertEqual(self.state_manager.current_state, GameStates.MENU)
 
     def test_state_amount(self):
-        self.assertEqual(self.state_manager.state_amount, 3)
+        self.assertEqual(self.state_manager._state_amount, 3)
 
     def test_next_state(self):
         self.state_manager.next_state()
