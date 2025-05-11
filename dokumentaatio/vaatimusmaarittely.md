@@ -5,18 +5,18 @@ Sovellus on pelattava ristinollapeli. Sitä voi pelata kahden henkilön kesken. 
 
 ## Perusversion toiminnallisuudet
 ### Aloitusruutu
-- Näytöllä on "Aloita" nappi, jota painamalla peli alkaa. **(Tehty)**
+- Näytöllä on "Start" nappi, jota painamalla peli alkaa. **(Tehty)**
 
 ### Pelinäkymä
 - Näytöllä on yhdeksän 3x3 pelilautaa, jotka ovat erillisiä ristinolla pelejä. **(Tehty)**
 - Ensimmäinen pelaaja aloittaa valitsemalla jonkin pelilaudoista ja laittamalla rastin johonkin sen 3x3 ruutuun. **(Tehty)**
-- Toinen pelaaja joutuu tämän jälkeen pelaamaan siinä pelilaudassa, joka vastaa ensimmäisen pelaajan asettaman ristin sijaintia. 
+- Toinen pelaaja joutuu tämän jälkeen pelaamaan siinä pelilaudassa, joka vastaa ensimmäisen pelaajan asettaman rastin sijaintia. **(Tehty)**
 - Kun pelaaja voittaa yhden yhdeksästä pelistä, se merkitään hänelle. Jos tapahtuu tasapeli, kyseinen pelilauta otetaan pois lopullisesta pelistä. **(Tehty)**
-- Jos pelaaja valitsee ruudun, jossa ei voi enää pelata (esim. kun kyseisen ruudun peli on jo päättynyt), saa seuraava pelaaja valita vapaasti mihin pelilautaan hän pelaa.
+- Jos pelaaja valitsee ruudun, jossa ei voi enää pelata (esim. kun kyseisen ruudun peli on jo päättynyt), saa seuraava pelaaja valita vapaasti mihin pelilautaan hän pelaa. **(Tehty)**
 - Peli jatkuu näin, kunnes toinen pelaajista voittaa pääpelin tai kun tulee tasapeli. **(Tehty)**
 
 ### Tulosruutu
-- Näytöllä ilmoitetaan kuka voitti.
+- Näytöllä ilmoitetaan kuka voitti. **(Tehty)**
 - Nappi, josta voi aloittaa pelin uudestaan. **(Tehty)**
 
 ## Jatkokehitysideoita

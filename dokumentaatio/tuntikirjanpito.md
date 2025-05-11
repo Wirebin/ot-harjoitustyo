@@ -13,4 +13,8 @@
 | 27.4 | 2 | 'Sub_board', 'Main_board' ja 'Tile' luokkien refaktorointi <br> sekä tiedostojen jakaminen eri kansioihin |
 | 28.4 | 3 | 'OnePressInput'-luokan teko ja pelin voittamisen mahdollistaminen |
 | 29.4 | 4 | Testien lisääminen ja docstrings dokumentointi |
-| Yht. | 25 |
+| 8.5 | 2 | Ominaisuus, jossa pelinappula pitää laittaa edellisen liikkeen vastaavalle pelilaudalle |
+| 9.5 | 3 | 'TurnManager'-luokan teko ja integrointi sekä vakiomuuttujien siirto omaan tiedostoonsa |
+| 10.5 | 3 | 'Text'-luokan teko ja mahdollisuus aloittaa peli uudestaan |
+| 11.5 | 3 | Testien lisääminen ja käyttöohjeiden, testausdokumnetin sekä arkkitehtuuridokumentin teko |
+| Yht. | 36 |

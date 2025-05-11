@@ -24,3 +24,13 @@
 - Lisätty 'OnePressInput'-luokka, joka hoitaa pelin käyttämät hiiren syötöt.
 - Lisätty mahdollisuus voittaa peli.
 - Lisätty pelin lopetusruutu, jossa näkyy pelin voittaja ja mahdollisuus pelata uudestaan.
+
+## Viikko 7
+- Lisätty 'TurnManager'-luokka, joka huolehtii pelitilanteen ylläpitämisestä.
+- Lisätty 'Text'-luokka helppoa tekstintekoa varten.
+- Siirretty vakiomuuttujat erilliseen 'constant.py' tiedostoon.
+- Ominaisuus, jossa pelinappula pitää laittaa edellisen liikkeen vastaavalle pelilaudalle.
+- Viimeisten testien lisäys.
+- Käyttöohjeiden teko.
+- Testidokumentin teko.
+- Arkkitehtuuridokumentin teko.
