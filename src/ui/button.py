@@ -1,5 +1,6 @@
 import pygame
 from input.one_press_input import OnePressInput
+from config.constants import BUTTON_COLOR_NORMAL, BUTTON_COLOR_HOVER
 
 class Button():
     """Class for creating a button object that includes a click event.
@@ -58,9 +59,9 @@ class Button():
                 to use the draw function of pygame.
         """
         if self.button_rect.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(canvas, (150, 150, 150), self.button_rect)
+            pygame.draw.rect(canvas, BUTTON_COLOR_HOVER, self.button_rect)
         else:
-            pygame.draw.rect(canvas, (200, 200, 200), self.button_rect)
+            pygame.draw.rect(canvas, BUTTON_COLOR_NORMAL, self.button_rect)
 
         canvas.blit(self.button_text_render, self.button_text_rect)
         
