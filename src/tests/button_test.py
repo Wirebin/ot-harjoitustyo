@@ -14,4 +14,4 @@ class TestButton(unittest.TestCase):
         self.assertEqual(self.button.size, (100, 50))
 
     def test_correct_text(self):
-        self.assertEqual(self.button.button_text, "Test")
+        self.assertEqual(self.button.text.text, "Test")
