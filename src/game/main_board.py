@@ -57,22 +57,24 @@ class MainBoard():
         of all of the SubBoards and checks for wins.
         """
         for i, board in enumerate(self.sub_boards):
+            print(f"{self.turn_manager.get_move()} {board.result}")
             # Board game has already finished, skipping.
-            if board.result:
+            if board.result is not None:
+                if self.turn_manager.get_move() == i:
+                    self.turn_manager.update_move(None)
                 continue
 
-            if self.turn_manager.get_move() is not None and self.turn_manager.get_move() == i:
+            if self.turn_manager.get_move() is not None and self.turn_manager.get_move() == i or \
+                self.turn_manager.get_move() is None:
                 board.update()
 
                 if self.check_win_main(not self.turn_manager.get_turn()):
                     self.state_manager.go_to_state(GameStates.RESULT)
-                return
-            
-            if self.turn_manager.get_move() is None:
-                board.update()
 
-                if self.check_win_main(self.turn_manager.get_turn()):
-                    self.state_manager.go_to_state(GameStates.RESULT)
+            elif self.turn_manager.get_move() is not None and self.turn_manager.get_move() == i and \
+                board.result is not None:
+                    pass
+
 
     def check_win_main(self, player):
         """Checks the winning conditions for the MainBoard.
@@ -90,8 +92,6 @@ class MainBoard():
         """
         main_board = [board.result for board in self.sub_boards]
         replaced_board = [1 if board == player else 0 for board in main_board]
-        print(f"{main_board}   {replaced_board}    {player}")
-
 
         for combination in WINNING_COMBOS:
             if all(replaced_board[i] == value for i, value in
