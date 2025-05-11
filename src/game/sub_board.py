@@ -72,7 +72,7 @@ class SubBoard():
         if self.check_win_sub(self.turn_manager.get_turn()):
             self.result = self.turn_manager.get_turn()
 
-        self.turn_manager.update_turn()
+        self.turn_manager.update_turn(not self.turn_manager.get_turn())
         self.turn_manager.update_move(tile_index)
 
     def check_win_sub(self, player):

@@ -29,10 +29,14 @@ class TurnManager():
         """
         return self.current_move
 
-    def update_turn(self):
+    def update_turn(self, next_turn: bool):
         """Updates the player_turn variable to the next player.
+
+        Args:
+            next_turn (bool):
+                The boolean which player_turn variable will be updated to.
         """
-        self.player_turn = not self.player_turn
+        self.player_turn = next_turn
 
     def update_move(self, next_move: int):
         """Updates the current_move variable to the provided integer.

@@ -40,17 +40,18 @@ class MainBoard():
                      self.location[1] + i * (tile_size * 3 + self.border_size)),
                      tile_size))
 
-    # def reset_board(self):
-    #     """Resets the board back to the original state.
-    #     """
-    #     self.player_turn = 1
-    #     self.sub_boards = []
-    #     for i in range(3):
-    #         for j in range(3):
-    #             self.sub_boards.append(SubBoard(self,
-    #                 (self.location[0] + i * (self.tile_size * 3 + self.border_size),
-    #                  self.location[1] + j * (self.tile_size * 3 + self.border_size)),
-    #                  self.tile_size))
+    def reset_board(self):
+        """Resets the board back to the original state.
+        """
+        self.turn_manager.update_turn(False)
+        self.turn_manager.update_move(None)
+        self.sub_boards = []
+        for i in range(3):
+            for j in range(3):
+                self.sub_boards.append(SubBoard(self,
+                    (self.location[0] + i * (self.tile_size * 3 + self.border_size),
+                     self.location[1] + j * (self.tile_size * 3 + self.border_size)),
+                     self.tile_size))
 
     def update(self):
         """The MainBoard update logic. Goes through the update functions
