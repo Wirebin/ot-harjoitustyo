@@ -1,6 +1,7 @@
 import pygame
+from ui.text import Text
 from input.one_press_input import OnePressInput
-from config.constants import BUTTON_COLOR_NORMAL, BUTTON_COLOR_HOVER
+from config.constants import BUTTON_COLOR_NORMAL, BUTTON_COLOR_HOVER, BLACK_COLOR
 
 class Button():
     """Class for creating a button object that includes a click event.
@@ -33,11 +34,11 @@ class Button():
                                        self.size[0],
                                        self.size[1])
 
-        self.button_text = button_text
-        font = pygame.font.Font(None, self.button_rect.height - 10)
-        self.button_text_render = font.render(button_text, True, (0,0,0))
-        self.button_text_rect = self.button_text_render.get_rect(center=self.button_rect.center)
-
+        self.text = Text(self.button_rect.center,
+                         self.button_rect.height - 10,
+                         BLACK_COLOR,
+                         button_text,
+                         "center")
         self.on_click = on_click
 
     def update(self):
@@ -63,5 +64,5 @@ class Button():
         else:
             pygame.draw.rect(canvas, BUTTON_COLOR_NORMAL, self.button_rect)
 
-        canvas.blit(self.button_text_render, self.button_text_rect)
+        self.text.draw(canvas)
         

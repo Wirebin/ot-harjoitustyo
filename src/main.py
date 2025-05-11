@@ -1,17 +1,17 @@
 import sys
 import pygame
+import ui.shapes
+from ui.text import Text
 from ui.button import Button
 from input.one_press_input import OnePressInput
 from game.states import GameStates
 from game.main_board import MainBoard
 from game.state_manager import StateManager
 from game.turn_manager import TurnManager
-from ui.shapes import cross, circle
-from config.constants import WIDTH, HEIGHT, TILE_SIZE, BACKGROUND_COLOR, \
-                             BLUE_COLOR, RED_COLOR
+from config.constants import FPS, WIDTH, HEIGHT, TILE_SIZE, BACKGROUND_COLOR, \
+                             BLUE_COLOR, RED_COLOR, BLACK_COLOR
 
 pygame.init()
-fps = 60
 fps_clock = pygame.time.Clock()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -20,7 +20,8 @@ state_manager = StateManager()
 turn_manager = TurnManager(False)
 
 # Place board on the center of the screen
-board = MainBoard(state_manager, turn_manager, ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
+board = MainBoard(state_manager, turn_manager,
+                  ((WIDTH/2)-(TILE_SIZE*9/2), (HEIGHT/2)-(TILE_SIZE*9/2)), TILE_SIZE)
 
 
 def restart_game():
@@ -43,6 +44,9 @@ restart_button = Button(((WIDTH / 2) - (100 / 2), (HEIGHT) - (80)),
                         "Restart",
                         restart_game)
 
+current_turn_text = Text((WIDTH / 2 - 40, 45), 50, BLACK_COLOR, "to Move:")
+winner_text = Text((WIDTH / 2 - 90, 45), 50, BLACK_COLOR, "wins the game!")
+
 def handle_game_state(state: GameStates):
     if state == GameStates.MENU:
         start_button.update()
@@ -52,22 +56,29 @@ def handle_game_state(state: GameStates):
 
     elif state == GameStates.GAME:
         if not turn_manager.player_turn:
-            cross(canvas, RED_COLOR, (WIDTH / 2 - 100, 20), 60)
-        else:
-            circle(canvas, BLUE_COLOR, (WIDTH / 2 - 100, 20), 60)
+            ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 110, 20), 60)
+        elif turn_manager.player_turn:
+            ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 110, 20), 60)
+        current_turn_text.draw(canvas)
 
         board.update()
         board.draw(canvas)
 
     elif state == GameStates.RESULT:
+        if not turn_manager.get_winner():
+            ui.shapes.cross(canvas, RED_COLOR, (WIDTH / 2 - 160, 20), 60)
+        elif turn_manager.get_winner:
+            ui.shapes.circle(canvas, BLUE_COLOR, (WIDTH / 2 - 160, 20), 60)
+        
         restart_button.update()
+        winner_text.draw(canvas)
         board.draw(canvas)
         restart_button.draw(canvas)
 
 
 def run():
     while True:
-        fps_clock.tick(fps)
+        fps_clock.tick(FPS)
         canvas.fill(BACKGROUND_COLOR)
         OnePressInput.update()
 
