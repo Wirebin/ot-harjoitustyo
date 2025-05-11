@@ -7,7 +7,10 @@ Peli on toiminnaltaan samankaltainen kuin tavallinen ristinolla, mutta normaalis
 [- Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)\
 [- Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)\
 [- Arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)\
-[- Changelog](dokumentaatio/changelog.md)
+[- Testausdokumentti](dokumentaatio/testaus.md)\
+[- Käyttöohjeet](dokumentaatio/kayttoohje.md)\
+[- Changelog](dokumentaatio/changelog.md)\
+[- Releases](https://github.com/Wirebin/ot-harjoitustyo/releases)
 
 ## Asennus
 1. Kopioi projekti itsellesi komennolla:
