@@ -58,8 +58,6 @@ class MainBoard():
         of all of the SubBoards and checks for wins.
         """
         for i, board in enumerate(self.sub_boards):
-            print(f"{self.turn_manager.get_move()} {board.result}")
-            # Board game has already finished, skipping.
             if board.result is not None:
                 if self.turn_manager.get_move() == i:
                     self.turn_manager.update_move(None)
@@ -70,12 +68,8 @@ class MainBoard():
                 board.update()
 
                 if self.check_win_main(not self.turn_manager.get_turn()):
+                    self.turn_manager.set_winner(not self.turn_manager.get_turn())
                     self.state_manager.go_to_state(GameStates.RESULT)
-
-            elif self.turn_manager.get_move() is not None and self.turn_manager.get_move() == i and \
-                board.result is not None:
-                    pass
-
 
     def check_win_main(self, player):
         """Checks the winning conditions for the MainBoard.
