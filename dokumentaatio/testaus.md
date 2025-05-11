@@ -15,4 +15,4 @@ Sovellus on testattu toimivaksi Linux käyttöjärjestelmässä. Sen lisäksi mo
 ### Testauskattavuus 
 ![](/dokumentaatio/assets/coverage.png)
 
-Testauskattavuus on kokonaisuudessaan 84%. Testauksesta on jätetty pois `main.py` ja `shapes.py` tiedostot, sillä ne hoitavat pelin piirtämistä ja konfigurointia. Testattavista tiedostoista on myös ohitettu kaikki 'draw()' funktiot, koska ne hoitavat myös vain käyttöliittymän piirtämistä eivätkä sisällä itsessään mitään logiikkaa.
+Testauskattavuus on kokonaisuudessaan 84%. Testauksesta on jätetty pois `main.py` ja `shapes.py` tiedostot, sillä ne hoitavat pelin piirtämistä ja konfigurointia. Testattavista tiedostoista on myös ohitettu kaikki `draw()` funktiot, koska ne hoitavat myös vain käyttöliittymän piirtämistä eivätkä sisällä itsessään mitään logiikkaa.
